@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dleplugin>
+	<name>Movie Reader</name>
+	<description>Vous pouvez facilement ajouter du contenu à votre site en extrayant des informations sur les films</description>
+	<icon>engine/skins/images/mws_movie.png</icon>
+	<version>2.0</version>
+	<dleversion>14.0</dleversion>
+	<versioncompare>greater</versioncompare>
+	<upgradeurl></upgradeurl>
+	<filedelete>0</filedelete>
+	<needplugin></needplugin>
+	<mnotice>0</mnotice>
+	<mysqlinstall><![CDATA[]]></mysqlinstall>
+	<mysqlupgrade><![CDATA[]]></mysqlupgrade>
+	<mysqlenable><![CDATA[INSERT INTO {prefix}_admin_sections (name, icon, title, descr, allow_groups) VALUES ('mws-film', 'engine/skins/images/mws_movie.png', 'MWS Film Reader v2.0', 'Sitenize kolayca film bilgilerini çekerek içerik ekleyebilirsiniz', '1')]]></mysqlenable>
+	<mysqldisable><![CDATA[]]></mysqldisable>
+	<mysqldelete><![CDATA[DELETE FROM {prefix}_admin_sections WHERE name = 'mws-film';]]></mysqldelete>
+	<phpinstall><![CDATA[]]></phpinstall>
+	<phpupgrade><![CDATA[]]></phpupgrade>
+	<phpenable><![CDATA[]]></phpenable>
+	<phpdisable><![CDATA[]]></phpdisable>
+	<phpdelete><![CDATA[]]></phpdelete>
+	<notice><![CDATA[]]></notice>
+	<file name="engine/inc/addnews.php">
+		<operation action="before">
+			<searchcode><![CDATA[							 <div class="form-group">
+							  <label class="control-label col-sm-2">{$lang['addnews_date']}</label>]]></searchcode>
+			<replacecode><![CDATA[                            <!-- Film Reader -->
+							{$film_reader_inc_addnews}
+							<!-- Film Reader -->
+							]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+		<operation action="after">
+			<searchcode><![CDATA[echo $categoryfilter;]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+	require_once ENGINE_DIR . '/modules/mws-film/tags.php';
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/inc/editnews.php">
+		<operation action="before">
+			<searchcode><![CDATA[							<div class="form-group">
+							  <label class="control-label col-sm-2">{$lang['edit_edate']}</label>]]></searchcode>
+			<replacecode><![CDATA[    <!-- Film Reader -->
+	{$film_reader_inc_addnews}
+	<!-- Film Reader -->
+	]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+		<operation action="after">
+			<searchcode><![CDATA[echo $categoryfilter;]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+	require_once ENGINE_DIR . '/modules/mws-film/tags.php';
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/modules/show.full.php">
+		<operation action="after">
+			<searchcode><![CDATA[$xfieldsdata = $row['xfields'];]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+		$dle_area = "full";
+		include ENGINE_DIR . "/modules/mws-film/xfcodes.php";
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/modules/show.short.php">
+		<operation action="before">
+			<searchcode><![CDATA[if( $view_template == "rss" ) {]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+		$dle_area = "short";
+		include ENGINE_DIR . "/modules/mws-film/xfcodes.php";
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/modules/show.custom.php">
+		<operation action="after">
+			<searchcode><![CDATA[$row['xfields_array'] = xfieldsdataload( $row['xfields'] );]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+	$dle_area = "custom";
+	include ENGINE_DIR . "/modules/mws-film/xfcodes.php";
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/modules/addnews.php">
+		<operation action="before">
+			<searchcode><![CDATA[$xfieldsaction = "categoryfilter";]]></searchcode>
+			<replacecode><![CDATA[// Film Reader
+		require_once ENGINE_DIR . '/modules/mws-film/tags.php';
+		$tpl->set( '{filmreader}', $add_tag );
+// Film Reader]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+</dleplugin>
