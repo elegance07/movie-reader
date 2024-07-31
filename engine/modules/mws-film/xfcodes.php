@@ -1,7 +1,7 @@
 <?php
 /*
 =============================================
- Name      : Film Reader v1.8.3
+ Name      : Film Reader v2.5.0
  Author    : Mehmet Hanoğlu ( MaRZoCHi )
  Site      : https://mehmethanoglu.com.tr
  License   : MIT License
