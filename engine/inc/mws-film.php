@@ -421,6 +421,12 @@ HTML;
             ), "save[rating_sep]", "{$mws_film['rating_sep']}"
         )
     );
+    
+    showRow(
+    $lng_inc['216'], // "TMDB API Key"
+    $lng_inc['217'], // "TMDB API key - The Movie Database API anahtarınızı buraya ekleyin"
+    "<input type='text' class='form-control' name='save[tmdb_api_key]' value='{$mws_film['tmdb_api_key']}'>"
+    );
 
     closeTab();
 
