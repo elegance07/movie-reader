@@ -209,6 +209,18 @@ $lng_inc = array(
 	'213'   => "Gerekli ilave alan kodlarının xfields.txt dosyasına eklenmesi için:",
 	'214'   => "İstek sistemi için gerekli yönlendirme kodlarının .htaccess dosyasına eklenmesi için:",
 	'215'   => "buraya tıklayın",
+	'216' => "TMDB API Key",
+    '217' => "TMDB API key - The Movie Database API anahtarınızı buraya ekleyin",
+    '218' => "OMDb API Key",
+    '219' => "OMDb API key - Open Movie Database API anahtarınızı buraya ekleyin",
+    '220' => "IMDB Rating",
+    '221' => "IMDB Rating alanının hangi xfield'e karşılık geldiğini seçiniz",
+    '222' => "Rotten Tomatoes Rating",
+    '223' => "Rotten Tomatoes Rating alanının hangi xfield'e karşılık geldiğini seçiniz",
+    '224' => "Metacritic Rating",
+    '225' => "Metacritic Rating alanının hangi xfield'e karşılık geldiğini seçiniz",
+    '226' => "IMDB Votes",
+    '227' => "IMDB Votes alanının hangi xfield'e karşılık geldiğini seçiniz",
 );
 
 
