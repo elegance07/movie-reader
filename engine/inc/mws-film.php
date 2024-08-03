@@ -428,6 +428,12 @@ HTML;
     "<input type='text' class='form-control' name='save[tmdb_api_key]' value='{$mws_film['tmdb_api_key']}'>"
     );
 
+     showRow(
+    $lng_inc['218'], // "OMDb API Key"
+    $lng_inc['219'], // "OMDb API key - Open Movie Database API anahtarınızı buraya ekleyin"
+    "<input type='text' class='form-control' name='save[omdb_api_key]' value='{$mws_film['omdb_api_key']}'>"
+    );
+
     closeTab();
 
     openTab("plugins");
@@ -661,6 +667,34 @@ HTML;
         $lng_inc['73'].$lng_inc['19'],
         makeDropDown($xfields,"save[film_trailer_mobil]", $mws_film['film_trailer_mobil'], True)
     );
+showXFRow(
+    $lng_inc['220'], // "IMDB Rating"
+    $lng_inc['220'] . $lng_inc['19'],
+    makeDropDown($xfields, "save[imdbrtg]", $mws_film['imdbrtg'], True),
+    "imdbrtg"
+);
+
+showXFRow(
+    $lng_inc['222'], // "Rotten Tomatoes Rating"
+    $lng_inc['222'] . $lng_inc['19'],
+    makeDropDown($xfields, "save[rottentmt]", $mws_film['rottentmt'], True),
+    "rottentmt"
+);
+
+showXFRow(
+    $lng_inc['224'], // "Metacritic Rating"
+    $lng_inc['224'] . $lng_inc['19'],
+    makeDropDown($xfields, "save[metacrt]", $mws_film['metacrt'], True),
+    "metacrt"
+);
+
+showXFRow(
+    $lng_inc['226'], // "IMDB Votes"
+    $lng_inc['226'] . $lng_inc['19'],
+    makeDropDown($xfields, "save[imdbvotes]", $mws_film['imdbvotes'], True),
+    "imdbvotes"
+);
+
     hiddenRow("save[film_type]", "type");
     hiddenRow("save[film_seasons]", "seasons");
     hiddenRow("save[film_season_count]", "season_count");
