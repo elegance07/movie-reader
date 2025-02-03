@@ -184,113 +184,69 @@ HTML;
 } else {
     echo <<< HTML
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-                var id;
-                id = $(e.target).attr("href");
-                $("select[type='settings']").change( function() {
-                    $.uniform.update();
-                    var item = $(this);
-                    var item_id = item.attr("id");
-                    var item_sl = item.val();
-                    if (item_id == "save[achange]") {
-                        if (item_sl == 1) {
-                            $("#rtext").slideDown();
-                        } else {
-                            $("#rtext").slideUp();
-                        }
-                    } else if (item_id == "save[req_notify]") {
-                        if (item_sl == 1) {
-                            $("#ntext").slideDown();
-                        } else {
-                            $("#ntext").slideUp();
-                        }
-                    }
-                });
-                $(".ibutton-container").click(function() {
-                    var item = $(this).find("input");
-                    var item_id = item.attr("id");
-                    var item_ch = item.is(":checked");
-                    if (item_ch == true) {
-                        item.attr("value", "1");
-                    } else {
-                        item.attr("value", "0");
-                    }
-                    if (item_id == "save[downcover]") {
-                        if (item_ch == false) {
-                            $("#image1_opt").fadeOut();
-                            $("#image2_opt").fadeOut();
-                        } else {
-                            $("#image1_opt").fadeIn();
-                            $("#image2_opt").fadeIn();
-                        }
-                    } else if (item_id == "save[read_trailer]") {
-                        if (item_ch == false) {
-                            $("#trailer_term").fadeOut();
-                            $("#trailer_term2").fadeOut();
-                        } else {
-                            $("#trailer_term").fadeIn();
-                            $("#trailer_term2").fadeIn();
-                        }
-                    }
-                });
-            });
-            $(".notify").chosen({
-                allow_single_deselect: true,
-                no_results_text: '{$lang['addnews_cat_fault']}'
-            });
-            $(".notifysel").chosen({
-                allow_single_deselect: true,
-                no_results_text: '{$lang['addnews_cat_fault']}'
-            });
-            $("select[type='settings']").change(function() {
-                $.uniform.update();
-                var item = $(this);
-                var item_id = item.attr("id");
-                var item_sl = item.val();
-                if (item_id == "save[achange]") {
-                    if (item_sl == 1) {
-                        $("#rtext").slideDown();
-                    } else {
-                        $("#rtext").slideUp();
-                    }
-                } else if (item_id == "save[req_notify]") {
-                    if (item_sl == 1) {
-                        $("#ntext").slideDown();
-                    } else {
-                        $("#ntext").slideUp();
-                    }
-                }
-            });
-            $(".ibutton-container").click(function() {
-                var item = $(this).find("input");
-                var item_id = item.attr("id");
-                var item_ch = item.is(":checked");
-                if (item_ch == true) {
-                    item.attr("value", "1");
-                } else {
-                    item.attr("value", "0");
-                }
-                if (item_id == "save[downcover]") {
-                    if (item_ch == false) {
-                        $("#image1_opt").fadeOut();
-                        $("#image2_opt").fadeOut();
-                    } else {
-                        $("#image1_opt").fadeIn();
-                        $("#image2_opt").fadeIn();
-                    }
-                } else if (item_id == "save[read_trailer]") {
-                    if (item_ch == false) {
-                        $("#trailer_term").fadeOut();
-                        $("#trailer_term2").fadeOut();
-                    } else {
-                        $("#trailer_term").fadeIn();
-                        $("#trailer_term2").fadeIn();
-                    }
-                }
-            });
+$(document).ready(function() {
+    // Chosen başlatma
+    try {
+        $(".notify, .notifysel").chosen({
+            allow_single_deselect: true,
+            no_results_text: '{$lang['addnews_cat_fault']}',
+            width: '100%'
         });
-    </script>
+    } catch(e) {
+        console.log("Chosen başlatma hatası:", e);
+    }
+
+    // Settings değişiklik fonksiyonu
+    function handleSettingsChange() {
+        if ($.uniform) $.uniform.update();
+        
+        var item = $(this);
+        var item_id = item.attr("id");
+        var item_sl = item.val();
+
+        if (item_id == "save[achange]") {
+            $("#rtext")[item_sl == 1 ? 'slideDown' : 'slideUp']();
+        } else if (item_id == "save[req_notify]") {
+            $("#ntext")[item_sl == 1 ? 'slideDown' : 'slideUp']();
+        }
+    }
+
+    // iButton tıklama fonksiyonu
+    function handleButtonClick() {
+        var item = $(this).find("input");
+        var item_id = item.attr("id");
+        var item_ch = item.is(":checked");
+
+        item.attr("value", item_ch ? "1" : "0");
+
+        if (item_id == "save[downcover]") {
+            $("#image1_opt, #image2_opt")[item_ch ? 'fadeIn' : 'fadeOut']();
+        } else if (item_id == "save[read_trailer]") {
+            $("#trailer_term, #trailer_term2")[item_ch ? 'fadeIn' : 'fadeOut']();
+        }
+    }
+
+    // Tab değişim eventi
+    $('[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        var id = $(e.target).attr("href");
+        
+        // Tab içindeki elementleri güncelle
+        $("select[type='settings']").off('change').on('change', handleSettingsChange);
+        $(".ibutton-container").off('click').on('click', handleButtonClick);
+        
+        // Chosen'ı güncelle
+        try {
+            $(".notify, .notifysel").trigger("chosen:updated");
+        } catch(e) {
+            console.log("Chosen güncelleme hatası:", e);
+        }
+    });
+
+    // Sayfa yüklendiğinde eventleri bağla
+    $("select[type='settings']").on('change', handleSettingsChange);
+    $(".ibutton-container").on('click', handleButtonClick);
+});
+</script>
     <form action="{$PHP_SELF}?mod={$MNAME}&action=save" class="systemsettings" method="post">
     <div class="panel panel-default">
         <div class="panel-heading">
